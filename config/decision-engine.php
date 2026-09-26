@@ -34,7 +34,11 @@ if (! function_exists('env')) {
 
 return [
     // Name of the engine used when a decision does not call ->using().
-    'default' => env('DECISION_ENGINE', 'jev'),
+    // When JEV_PROVIDER=openjev, the default engine becomes 'openjev' (a free community
+    // gateway to the same Jev model). TypeSafe stays the default otherwise.
+    'default' => env('JEV_PROVIDER') === 'openjev'
+        ? env('DECISION_ENGINE', 'openjev')
+        : env('DECISION_ENGINE', 'jev'),
 
     // Named engines. `driver` selects the implementation (jev | openai | anthropic | custom via
     // EngineManager::extend()); every other key is handed to that driver.
@@ -44,6 +48,15 @@ return [
             'api_key' => env('TYPESAFE_API_KEY'),
             'base_url' => env('TYPESAFE_BASE_URL', 'https://api.typesafe.ai'),
             'model' => env('TYPESAFE_DEFAULT_MODEL', 'jev-latest'),
+        ],
+        // OpenJEV — a free community gateway to the same Jev model (https://openjev.sh).
+        // Uses the same 'jev' driver; only the endpoint, model id and key differ.
+        // Set JEV_PROVIDER=openjev to make this the default, or call ->using('openjev').
+        'openjev' => [
+            'driver' => 'jev',
+            'api_key' => env('OPENJEV_API_KEY'),
+            'base_url' => env('OPENJEV_BASE_URL', 'https://api.openjev.sh'),
+            'model' => env('OPENJEV_DEFAULT_MODEL', 'openjev'),
         ],
         'luna' => [
             'driver' => 'openai',

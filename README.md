@@ -5,6 +5,8 @@ against your application state, through a fluent API. TypeSafe's **Jev** (a
 System One model with calibrated probabilities) is the default engine; **OpenAI** and **Anthropic**
 models are alternative engines that emulate the same primitives via structured output.
 
+**OpenJEV support:** Jev is built by [TypeSafe](https://typesafe.ai). This fork keeps TypeSafe as the default and adds optional support for [OpenJEV](https://openjev.sh), a free community gateway to the same Jev model — set `OPENJEV_API_KEY` (or `JEV_PROVIDER=openjev`) to use it. Original project: https://github.com/swisnl/DecisionEngine by @swisnl.
+
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/swisnl/decision-engine.svg)](https://packagist.org/packages/swisnl/decision-engine)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/swisnl/decision-engine.svg)](https://packagist.org/packages/swisnl/decision-engine)
@@ -74,7 +76,8 @@ export TYPESAFE_API_KEY=ts_...
 ```
 
 Optional: `TYPESAFE_BASE_URL`, `TYPESAFE_DEFAULT_MODEL` (default `jev-latest`), `OPENAI_API_KEY`,
-`ANTHROPIC_API_KEY`, `DECISION_ENGINE` (default engine name), `DECISION_ENGINE_TRANSPORT`.
+`ANTHROPIC_API_KEY`, `DECISION_ENGINE` (default engine name), `DECISION_ENGINE_TRANSPORT`,
+`OPENJEV_API_KEY` (OpenJEV gateway key), `JEV_PROVIDER` (set to `openjev` to use OpenJEV as default).
 
 ## Quick start
 
@@ -114,6 +117,7 @@ Engines are resolved by an `EngineManager` with the built-in drivers `jev`, `ope
 | Name (default config) | Driver | Default model | Calibrated |
 |---|---|---|---|
 | `jev` (default) | `jev` | `jev-latest` | **yes** |
+| `openjev` | `jev` | `openjev` | **yes** |
 | `luna` | `openai` | `gpt-5.6-luna` | no |
 | `haiku` | `anthropic` | `claude-haiku-4-5` | no |
 
